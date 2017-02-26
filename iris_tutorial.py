@@ -1,4 +1,5 @@
 # Load libraries
+import numpy as np
 import pandas
 from pandas.tools.plotting import scatter_matrix
 import matplotlib.pyplot as plt
@@ -12,6 +13,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
+from collections import OrderedDict
 
 # Load dataset
 url = "iris.data"
@@ -20,8 +22,67 @@ dataset = pandas.read_csv(url, names=names)
 
 # Inspect dataset
 # shape
-print(dataset.shape)
-# peek at first 20 entries
-print(dataset.head(20))
-# descriptions (count, min, max, std, percentiles)
-print(dataset.describe())
+# print(dataset.shape)
+# # peek at first 20 entries
+# print(dataset.head(20))
+# # descriptions (count, min, max, std, percentiles)
+# print(dataset.describe())
+# # class distribution
+# print(dataset.groupby('class').size())
+
+# Visualize dataset
+# # box and whisker plots
+# dataset.plot(kind='box', subplots=True, layout=(2,2), sharex=False, sharey=False)
+# plt.show()
+# # histograms
+# dataset.hist()
+# plt.show()
+# # scatter plot matrix
+# scatter_matrix(dataset)
+# plt.show()
+
+# Split dataset
+array = dataset.values
+X = array[:,0:4]
+Y = array[:,4]
+
+# Test options and evaluation metric
+validation_size = 0.20
+seed = 7
+scoring = 'accuracy'
+
+X_train, X_validation, Y_train, Y_validation = model_selection.train_test_split(X, Y, test_size=validation_size, random_state=seed)
+# Evaluate Algorithms
+models = []
+models.append(('LR', LogisticRegression()))
+models.append(('LDA', LinearDiscriminantAnalysis()))
+models.append(('KNN', KNeighborsClassifier()))
+models.append(('CART', DecisionTreeClassifier()))
+models.append(('NB', GaussianNB()))
+models.append(('SVM', SVC()))
+
+results = OrderedDict()
+kfold = model_selection.KFold(n_splits=10)
+for name, model in models:
+	cv_results = model_selection.cross_val_score(model, X_train, Y_train, cv=kfold, scoring=scoring)
+	results[name] = cv_results
+
+# # Compare Algorithms
+# fig = plt.figure()
+# fig.suptitle('Algorithm Comparison')
+# ax = fig.add_subplot(111)
+# plt.boxplot(list(results.values()))
+# ax.set_xticklabels(results.keys())
+# plt.show()
+
+# Make predictions on validation dataset
+svc = SVC()
+svc.fit(X_train, Y_train)
+predictions = svc.predict(X_validation)
+print(accuracy_score(Y_validation, predictions))
+print(confusion_matrix(Y_validation, predictions))
+print(classification_report(Y_validation, predictions))
+xvalidation = np.array([6.7, 3.1, 5.6, 2.4]).reshape(1, -1)
+yvalidation = np.array(['Iris-versicolor']).reshape(1, -1)
+predictions = svc.predict(xvalidation)
+print(accuracy_score(yvalidation, predictions))
