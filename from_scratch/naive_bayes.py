@@ -70,7 +70,8 @@ def get_accuracy(testSet, predictions):
 	return (correct/float(len(testSet))) * 100.0
 
 def main():
-	dataset = load_csv('pima-indians-diabetes.csv')
+    # TODO: add absolute path
+	dataset = load_csv('datasets/pima-indians-diabetes.csv')
 	trainingSet, testSet = split_data(dataset)
 	print(('Split {0} rows into train={1} and test={2} rows').format(len(dataset), len(trainingSet), len(testSet)))
 	# prepare model

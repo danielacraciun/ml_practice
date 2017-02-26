@@ -13,36 +13,6 @@ from sklearn.gaussian_process import GaussianProcessClassifier
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
 
-# load dataset
-# url = "https://goo.gl/vhm1eU"
-# names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
-# dataframe = read_csv(url, names=names)
-# array = dataframe.values
-# X = array[:,0:8]
-# Y = array[:,8]
-# url2 = "http://archive.ics.uci.edu/ml/machine-learning-databases/statlog/heart/heart.dat"
-# names2 = [
-#     'age',
-#     'sex',
-#     'cp',
-#     'trestbps',
-#     'chol',
-#     'fbs',
-#     'restecg',
-#     'thalach',
-#     'exang',
-#     'oldpeak',
-#     'slope',
-#     'ca',
-#     'thal',
-#     'num',]
-#
-# data2 = read_csv('data.txt', names=names2, sep=' ')
-# array = data2.values
-# X = array[:,0:13]
-# Y = array[:,13]
-# prepare models
-
 names2 = [
     'age',
     'sex',
