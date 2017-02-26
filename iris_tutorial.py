@@ -1,19 +1,19 @@
 # Load libraries
 import numpy as np
 import pandas
-from pandas.tools.plotting import scatter_matrix
 import matplotlib.pyplot as plt
+
+from collections import OrderedDict
+
+from pandas.tools.plotting import scatter_matrix
 from sklearn import model_selection
-from sklearn.metrics import classification_report
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
-from collections import OrderedDict
 
 # Load dataset
 url = "iris.data"
@@ -22,24 +22,24 @@ dataset = pandas.read_csv(url, names=names)
 
 # Inspect dataset
 # shape
-# print(dataset.shape)
-# # peek at first 20 entries
-# print(dataset.head(20))
-# # descriptions (count, min, max, std, percentiles)
-# print(dataset.describe())
-# # class distribution
-# print(dataset.groupby('class').size())
+print(dataset.shape)
+# peek at first 20 entries
+print(dataset.head(20))
+# descriptions (count, min, max, std, percentiles)
+print(dataset.describe())
+# class distribution
+print(dataset.groupby('class').size())
 
 # Visualize dataset
-# # box and whisker plots
-# dataset.plot(kind='box', subplots=True, layout=(2,2), sharex=False, sharey=False)
-# plt.show()
-# # histograms
-# dataset.hist()
-# plt.show()
-# # scatter plot matrix
-# scatter_matrix(dataset)
-# plt.show()
+# box and whisker plots
+dataset.plot(kind='box', subplots=True, layout=(2,2), sharex=False, sharey=False)
+plt.show()
+# histograms
+dataset.hist()
+plt.show()
+# scatter plot matrix
+scatter_matrix(dataset)
+plt.show()
 
 # Split dataset
 array = dataset.values
@@ -50,8 +50,8 @@ Y = array[:,4]
 validation_size = 0.20
 seed = 7
 scoring = 'accuracy'
-
 X_train, X_validation, Y_train, Y_validation = model_selection.train_test_split(X, Y, test_size=validation_size, random_state=seed)
+
 # Evaluate Algorithms
 models = []
 models.append(('LR', LogisticRegression()))
@@ -67,13 +67,13 @@ for name, model in models:
 	cv_results = model_selection.cross_val_score(model, X_train, Y_train, cv=kfold, scoring=scoring)
 	results[name] = cv_results
 
-# # Compare Algorithms
-# fig = plt.figure()
-# fig.suptitle('Algorithm Comparison')
-# ax = fig.add_subplot(111)
-# plt.boxplot(list(results.values()))
-# ax.set_xticklabels(results.keys())
-# plt.show()
+# Compare Algorithms
+fig = plt.figure()
+fig.suptitle('Algorithm Comparison')
+ax = fig.add_subplot(111)
+plt.boxplot(list(results.values()))
+ax.set_xticklabels(results.keys())
+plt.show()
 
 # Make predictions on validation dataset
 svc = SVC()
