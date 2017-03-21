@@ -1,5 +1,7 @@
 
 # Tune learning_rate
+# 1. If the system is overlearning, decrease the learning rate and/or increase the number of trees.
+# 2. If the system is underlearning, speed the learning up to be more aggressive by increasing the learning rate and/or decreasing the number of trees.
 from numpy import loadtxt
 from xgboost import XGBClassifier
 from sklearn.model_selection import GridSearchCV
