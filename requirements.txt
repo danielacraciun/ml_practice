@@ -27,3 +27,4 @@ tensorflow==1.0.0
 Theano==0.8.2
 traitlets==4.3.2
 wcwidth==0.1.7
+xgboost==0.6a2
